@@ -34,9 +34,10 @@ typedef struct {
     //Preciso entender se coloco novamente o crm do médico e o cpf do paciente, afinal eles irão se encontrar aqui na consulta, mas talvez não é necessário indicar isso na struct
 } Consulta;
 
-
+// Funções para o médico
 Medico medicos[MAX_MEDICOS];
 int totalMedicos = 0;
+
 
 void addDoctor(){
     if(totalMedicos >=MAX_MEDICOS){
@@ -127,6 +128,20 @@ void menu(){
     }while (option!=4);
 }
 
+//Fim das funções dos médicos
+
+
+// Inicio das funções para os pacientes
+
+Paciente pacientes[MAX_PACIENTES];
+int totalPacients = 0;
+
+//Fim das funções dos pacientes
+
+
+//Inicio das funções para consulta
+
+//Fim das funções de consulta
 
 int main () {
     menu();
