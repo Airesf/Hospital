@@ -13,6 +13,28 @@ typedef struct {
     int ativo; // 1 - Ativo, 0 - Inativo
 } Medico;
 
+
+
+typedef struct {
+    int cpf;
+    char name[50];
+    int rg;
+    char adress[100]; //Bro's adress
+    int telefone;
+    char sexo[50];
+    int taVivo; // 1 - Vivo; 0 - Morto;
+} Paciente;
+
+
+typedef struct {
+    int consulta;
+    int horario;
+    int data;
+    int duration;
+    //Preciso entender se coloco novamente o crm do médico e o cpf do paciente, afinal eles irão se encontrar aqui na consulta, mas talvez não é necessário indicar isso na struct
+} Consulta;
+
+
 Medico medicos[MAX_MEDICOS];
 int totalMedicos = 0;
 
@@ -38,7 +60,7 @@ void addDoctor(){
     medicos[totalMedicos].ativo = 1;
     totalMedicos++;
 
-    printf("Médico cadastrado com sucesso no sistema!\n");
+    printf("Medico cadastrado com sucesso no sistema!\n");
 }
 
 //Listing existing doctors for you my brother
@@ -55,7 +77,7 @@ void listDoctors(){
 //Deleting doctors candangos, os baum stay os candango go away
 void deleteDoctor(){
     int crm;
-    printf("\n Digite o CRM do medico ao qual você deseja remover do sistema: ");
+    printf("\n Digite o CRM do medico ao qual voce deseja remover do sistema: ");
     scanf(" %d", &crm);
 
     for (int i = 0; i<totalMedicos; i++){
