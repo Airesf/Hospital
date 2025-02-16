@@ -16,17 +16,6 @@ typedef struct {
 
 
 typedef struct {
-    int cpf;
-    char name[50];
-    int rg;
-    char adress[100]; //Bro's adress
-    int telefone;
-    char sexo[50];
-    int taVivo; // 1 - Vivo; 0 - Morto;
-} Paciente;
-
-
-typedef struct {
     int consulta;
     int horario;
     int data;
@@ -92,7 +81,7 @@ void deleteDoctor(){
 }
 
 //Menu, atualmente apenas para médicos
-void menu(){
+void menuMedico(){
     int option;
     do{
         printf("\n-------Menu-------\n");
@@ -100,7 +89,7 @@ void menu(){
         printf("2 - Listar Medicos\n");
         printf("3 - Excluir Medico\n");
         printf("4 - Sair\n");
-        printf("O que você quer pra hoje meu pratao?: ");
+        printf("O que voce quer pra hoje meu pratao?: ");
         scanf("%d", &option);
         getchar();
 
@@ -122,7 +111,7 @@ void menu(){
             break;
 
             default:
-            printf("Desculpe, você poderia escolher outra opcao?\n");
+            printf("Desculpe, voce poderia escolher outra opcao?\n");
         
         }
     }while (option!=4);
@@ -136,14 +125,60 @@ void menu(){
 Paciente pacientes[MAX_PACIENTES];
 int totalPacients = 0;
 
+typedef struct {
+    int cpf;
+    char name[50];
+    int rg;
+    char adress[100]; //Bro's adress
+    int telefone;
+    char sexo[50];
+    int taVivo; // 1 - Vivo; 0 - Morto;
+} Paciente;
+
 //Fim das funções dos pacientes
 
 
 //Inicio das funções para consulta
 
+void menuConsultas(){
+    //Escrever aqui o menu de consultas
+}
+
 //Fim das funções de consulta
 
 int main () {
-    menu();
+
+    int opcoes;
+    printf("Olá, seja bem vindo(a) ao sistema de gerenciamnento de consultas médicas!\n");
+    printf("Developed by cttbiel and aires.\n");
+    printf("Por favor, escolha uma das opções abaixo: \n");
+
+    do
+    {
+        printf("\n-------Menu-------\n");
+        printf("1 - Medicos\n");
+        printf("2 - Pacientes\n");
+        printf("3 - Consultas\n");
+        printf("4 - Sair\n");
+        scanf(" %d", &opcoes);    
+    
+    switch (opcoes)
+    {
+    case 1:
+        menuMedico();
+        break;
+    case 2:
+        menuPacients();
+        break;
+
+    case 3:
+        menuConsultas();
+        break;
+    
+    default:
+        printf("Opcao invalida patrao, joga ota ai pa nois\n");
+        break;
+    }
+    } while (opcoes != 4);
     return 0;
 }
