@@ -38,6 +38,8 @@ void incluirMedico(){
 
     }
     
+
+    
     printf("\n --- Cadastro de Medico ---\n");
     printf("Digite o CRM: ");
     scanf(" %d", &medicos[totalMedicos].crm);
