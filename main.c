@@ -138,7 +138,15 @@ typedef struct {
 
 void menuPacientes() {
 
-    //Escrever aqui as funções dos pacientes
+    int option;
+    do {
+
+        switch(option){
+            case 1:
+                addPaciente();
+                break;
+        }
+    }
 }
 //Fim das funções dos pacientes
 
