@@ -135,6 +135,11 @@ typedef struct {
     int taVivo; // 1 - Vivo; 0 - Morto;
 } Paciente;
 
+
+void menuPacientes() {
+
+    //Escrever aqui as funções dos pacientes
+}
 //Fim das funções dos pacientes
 
 
@@ -168,11 +173,14 @@ int main () {
         menuMedico();
         break;
     case 2:
-        menuPacients();
+        menuPacientes();
         break;
 
     case 3:
         menuConsultas();
+        break;
+    case 4:
+        printf("Fechando aplicação...\n");
         break;
     
     default:
