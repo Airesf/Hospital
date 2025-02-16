@@ -2,25 +2,40 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-//Struct dos doctor
+// Funções para o médico
 typedef struct {
     int crm;
-    char name[50];
+    char nome[50];
     char especialidade[50];
 } Medico;
 
 Medico *medicos = NULL;
 int totalMedicos = 0;
 
-// Funções para o médico
-Medico medicos[MAX_MEDICOS];
-int totalMedicos = 0;
-
 
 void incluirMedico(){
     medicos = (Medico *)realloc(medicos,(totalMedicos+1) * sizeof(Medico));
-    if (medicos == NULL){}
+    if (medicos == NULL){
+        printf("Eita, deu erro na hora de alocar a memoria doidho!\n");
+        return;
+    }
+
+    printf("\n --- Cadastro de Medico ---");
+    printf("Digite o CRM: ");
+    scanf(" %d", &medicos[totalMedicos].crm);
+    getchar();
+
+    printf("Digite o nome: ");
+    fgets(medicos[totalMedicos].nome, 50, stdin);
+    medicos[totalMedicos].nome[strcspn(medicos[totalMedicos].nome, "\n")] = 0;
+
+    printf("Digite a especialização: ");
+    fgets(medicos[totalMedicos].especialidade, 50, stdin);
+    medicos[totalMedicos].especialidade[strcspn(medicos[totalMedicos].especialidade, "\n")] = 0;
+
+    totalMedicos++;
+    printf("Medico cadastrado com sucesso!\n");
+
     }
     
     printf("\n --- Cadastro de Medico ---\n");
