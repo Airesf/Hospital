@@ -5,6 +5,7 @@
 #define MAX_MEDICOS 20
 #define MAX_PACIENTES 50
 
+
 //Struct dos doctor
 typedef struct {
     int crm;
@@ -14,14 +15,6 @@ typedef struct {
 } Medico;
 
 
-
-typedef struct {
-    int consulta;
-    int horario;
-    int data;
-    int duration;
-    //Preciso entender se coloco novamente o crm do médico e o cpf do paciente, afinal eles irão se encontrar aqui na consulta, mas talvez não é necessário indicar isso na struct
-} Consulta;
 
 // Funções para o médico
 Medico medicos[MAX_MEDICOS];
@@ -135,6 +128,12 @@ typedef struct {
     int taVivo; // 1 - Vivo; 0 - Morto;
 } Paciente;
 
+void addPaciente() {
+    int tamanho = 0;
+
+
+}
+
 
 void menuPacientes() {
 
@@ -152,6 +151,17 @@ void menuPacientes() {
 
 
 //Inicio das funções para consulta
+
+typedef struct {
+    
+    int consulta;
+    int horario;
+    int data;
+    int duration;
+    int idCrm; //Variável para chamar o CRM do médico
+    int idCpf; //Variável para chamar o Cpf do paciente
+    //Preciso entender se coloco novamente o crm do médico e o cpf do paciente, afinal eles irão se encontrar aqui na consulta, mas talvez não é necessário indicar isso na struct
+} Consulta;
 
 void menuConsultas(){
     //Escrever aqui o menu de consultas
@@ -175,8 +185,7 @@ int main () {
         printf("4 - Sair\n");
         scanf(" %d", &opcoes);    
     
-    switch (opcoes)
-    {
+    switch (opcoes) {
     case 1:
         menuMedico();
         break;
