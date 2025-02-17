@@ -477,6 +477,12 @@ void excluirMedico(medico **m, int *num_medicos, consulta **c, int *num_consulta
         {
             if ((*c)[i].id_medico == crm)
             {
+                printf("Excluindo a consulta #%d do medico deletado...\n", (*c)[i].num_consulta);
+                printf("ID do Paciente: %d\n", (*c)[i].id_paciente);
+                printf("Horario: %s\n", (*c)[i].horario);
+                printf("Duracao: %d\n", (*c)[i].duracao);
+                printf("Data: %s\n", (*c)[i].data);
+                printf("-----Consulta deleteda com sucesso!-----\n");
                 for (int j = i; j < *num_consultas - 1; j++)
                 {
                     (*c)[j] = (*c)[j + 1];
