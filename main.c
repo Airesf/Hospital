@@ -7,12 +7,12 @@
 
 typedef struct
 {
-    int id;
-    char name[50];
     int cpf;
+    char name[50];
+    char rg[25];
     char endereco[100];
-    int telefone;
-    char sexo; // M para masculino e F para feminino
+    char telefone[20];
+    char sexo[20];
 } paciente;
 
 typedef struct
@@ -21,7 +21,7 @@ typedef struct
     int id_paciente;
     int id_medico;
     char horario[6];
-    int duracao;
+    char duracao[20];
     char data[10];
 } consulta;
 
@@ -46,8 +46,8 @@ void addPaciente(paciente **p, int *num_paciente) // - - - - - - - - - - - - - -
         }
         printf("\n --- Cadastro de Paciente ---\n");
 
-        printf("ID: ");
-        scanf(" %d", &(*p)[*num_paciente].id);
+        printf("Digite um CPF para o paciente: ");
+        scanf(" %d", &(*p)[*num_paciente].cpf);
         getchar();
 
         printf("Nome: ");
@@ -55,8 +55,8 @@ void addPaciente(paciente **p, int *num_paciente) // - - - - - - - - - - - - - -
         (*p)[*num_paciente].name[strcspn((*p)[*num_paciente].name, "\n")] = 0;*/
         scanf(" %[^\n]", (*p)[*num_paciente].name);
 
-        printf("CPF: ");
-        scanf(" %d", &(*p)[*num_paciente].cpf);
+        printf("Digite um RG para o paciente: ");
+        scanf(" %[^\n]", (*p)[*num_paciente].rg);
 
         printf("Endereco: ");
         // fgets((*p)[*num_paciente].endereco, 100, stdin);
@@ -64,10 +64,12 @@ void addPaciente(paciente **p, int *num_paciente) // - - - - - - - - - - - - - -
         scanf(" %[^\n]", (*p)[*num_paciente].endereco);
 
         printf("Telefone: ");
-        scanf(" %d", &(*p)[*num_paciente].telefone);
+        // scanf(" %d", &(*p)[*num_paciente].telefone);
+        scanf(" %[^\n]", (*p)[*num_paciente].telefone);
 
         printf("Sexo: ");
-        scanf(" %c", &(*p)[*num_paciente].sexo);
+        // scanf(" %c", &(*p)[*num_paciente].sexo);
+        scanf(" %[^\n]", (*p)[*num_paciente].sexo);
 
         (*num_paciente)++;
 
@@ -80,43 +82,68 @@ void addPaciente(paciente **p, int *num_paciente) // - - - - - - - - - - - - - -
     }
 }
 
+
+void listarPacientes(paciente *p, int num_paciente){ //Exibindo todos os pacientes
+    if (num_paciente == 0){
+        printf("Nenhum paciente cadastrado!\n");
+        return;
+    }
+
+    printf("------ Lista de Pacientes ------\n");
+
+    for (int i = 0; i < num_paciente; i++){
+        printf("CPF: %d\n", p[i].cpf);
+        printf("Nome: %s\n", p[i].name);
+        printf("RG: %s\n", p[i].rg);
+        printf("Endereco: %s\n", p[i].endereco);
+        printf("Telefone: %s\n", p[i].telefone);
+}
+}
+
+
 void alterarPaciente(paciente **p, int *num_paciente) //  - - - - - - - - - - - - - - - - - -ALTERAR PACIENTE - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 {
     int idPesquisar;
-    printf("\nDigite o ID do paciente que deseja alterar: ");
+    printf("\nDigite o CPF do paciente que deseja alterar: ");
     scanf("%d", &idPesquisar);
     getchar();
 
     for (int i = 0; i < *num_paciente; i++)
     {
-        if ((*p)[i].id == idPesquisar)
+        if ((*p)[i].cpf == idPesquisar)
         {
             printf("\n --- Alterar Paciente ---\n");
+            printf("CPF atual do paciente: %d\n", (*p)[i].cpf);
+            printf("Nome atual do paciente: %s\n", (*p)[i].name);
+            printf("RG atual do paciente: %s\n", (*p)[i].rg);
+            printf("Endereço atual do paciente: %s\n", (*p)[i].endereco);
+            printf("Telefone atual do paciente: %s\n", (*p)[i].telefone);
+            printf("Sexo atual do paciente: %s\n", (*p)[i].sexo);
 
-            printf("Nome atual: %s\n", (*p)[i].name);
-            printf("CPF atual: %d\n", (*p)[i].cpf);
-            printf("Endereço atual: %s\n", (*p)[i].endereco);
-            printf("Telefone atual: %d\n", (*p)[i].telefone);
-            printf("Sexo atual: %c\n", (*p)[i].sexo);
+            printf("Digite o novo CPF: ");
+            scanf("%d", &(*p)[i].cpf);
+            getchar();
 
             printf("Digite o novo Nome: ");
             scanf(" %[^\n]", (*p)[i].name);
 
-            printf("CPF: ");
-            scanf("%d", &(*p)[i].cpf);
+            printf("Digite o novo RG: ");
+            scanf(" %[^\n]", (*p)[i].rg);
 
             printf(" Digite o Novo Endereço: ");
             scanf(" %[^\n]", (*p)[i].endereco);
 
             printf("Digite o novo Telefone: ");
-            scanf("%d", &(*p)[i].telefone);
+            // scanf("%d", &(*p)[i].telefone);
+            scanf(" %[^\n]", (*p)[i].telefone);
 
             printf("Digite o novo Sexo: ");
-            scanf(" %c", &(*p)[i].sexo);
+            // scanf(" %c", &(*p)[i].sexo);
+            scanf(" %[^\n]", (*p)[i].sexo);
 
             printf("Paciente alterado com sucesso!\n");
-            break;
         }
+        break;
     }
 }
 
@@ -130,21 +157,21 @@ void excluirPaciente(paciente **p, int *num_paciente, consulta **c, int *num_con
     }
 
     int idPesquisar, encontrado = 0;
-    printf("\nDigite o RG do paciente que deseja excluir: ");
+    printf("\nDigite o CPF do paciente que deseja excluir: ");
     scanf("%d", &idPesquisar);
     getchar();
 
     for (int i = 0; i < *num_paciente; i++)
     {
-        if ((*p)[i].id == idPesquisar)
+        if ((*p)[i].cpf == idPesquisar)
         {
 
             printf("O paciente: %s foi excluido com sucesso!\n", (*p)[i].name);
-            printf("ID: %d\n", (*p)[i].id);
             printf("CPF: %d\n", (*p)[i].cpf);
+            printf("RG: %s\n", (*p)[i].rg);
             printf("Endereco: %s\n", (*p)[i].endereco);
-            printf("Telefone: %d\n", (*p)[i].telefone);
-            printf("Sexo: %c\n", (*p)[i].sexo);
+            printf("Telefone: %s\n", (*p)[i].telefone);
+            printf("Sexo: %s\n", (*p)[i].sexo);
 
             for (int j = i; j < *num_paciente - 1; j++)
             {
@@ -165,6 +192,12 @@ void excluirPaciente(paciente **p, int *num_paciente, consulta **c, int *num_con
         {
             if ((*c)[i].id_paciente == idPesquisar)
             {
+                printf("Excluindo a consulta #%d do paciente deletado...\n", (*c)[i].num_consulta);
+                printf("ID do Medico: %d\n", (*c)[i].id_medico);
+                printf("Horario: %s\n", (*c)[i].horario);
+                printf("Duracao: %s\n", (*c)[i].duracao);
+                printf("Data: %s\n", (*c)[i].data);
+                printf("-----Consulta deleteda com sucesso!-----\n");
                 for (int j = i; j < *num_consultas - 1; j++)
                 {
                     (*c)[j] = (*c)[j + 1];
@@ -184,22 +217,22 @@ void excluirPaciente(paciente **p, int *num_paciente, consulta **c, int *num_con
 
 void pesquisarPaciente(paciente **p, int *num_paciente) // - - - - - - - - - - - - - - - - - -PESQUISAR PACIENTE - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 {
-    printf("\nDigite o ID do paciente que deseja pesquisar: ");
+    printf("\nDigite o CPF do paciente que deseja pesquisar: ");
     int idPesquisar;
     scanf("%d", &idPesquisar);
     getchar();
 
     for (int i = 0; i < *num_paciente; i++)
     {
-        if ((*p)[i].id == idPesquisar)
+        if ((*p)[i].cpf == idPesquisar)
         {
             printf("\n --- Paciente Encontrado ---\n");
-            printf("ID: %d\n", (*p)[i].id);
-            printf("Nome: %s\n", (*p)[i].name);
             printf("CPF: %d\n", (*p)[i].cpf);
+            printf("Nome: %s\n", (*p)[i].name);
+            printf("CPF: %s\n", (*p)[i].rg);
             printf("Endereço: %s\n", (*p)[i].endereco);
-            printf("Telefone: %d\n", (*p)[i].telefone);
-            printf("Sexo: %c\n", (*p)[i].sexo);
+            printf("Telefone: %s\n", (*p)[i].telefone);
+            printf("Sexo: %s\n", (*p)[i].sexo);
             break;
         }
     }
@@ -235,7 +268,8 @@ void addConsulta(consulta **c, int *num_consultas) // - - - - - - - - - - - - --
         scanf(" %[^\n]", (*c)[*num_consultas].horario);
 
         printf("Duracao: ");
-        scanf("%d", &(*c)[*num_consultas].duracao);
+        // scanf("%d", &(*c)[*num_consultas].duracao);
+        scanf(" %[^\n]", (*c)[*num_consultas].duracao);
 
         printf("Data: ");
         // fgets((*c)[*num_consultas].data, 10, stdin);
@@ -266,11 +300,17 @@ void alterarConsulta(consulta **c, int *num_consultas) //- - -- - -- -- - -- -- 
         {
             printf("\n --- Alterar Consulta ---\n");
 
+
+            printf("Numero da Consulta atual: %d\n", (*c)[i].num_consulta);
             printf("ID do Paciente atual: %d\n", (*c)[i].id_paciente);
             printf("ID do Medico atual: %d\n", (*c)[i].id_medico);
             printf("Horario atual: %s\n", (*c)[i].horario);
-            printf("Duracao atual: %d\n", (*c)[i].duracao);
+            printf("Duracao atual: %s\n", (*c)[i].duracao);
             printf("Data atual: %s\n", (*c)[i].data);
+
+            printf("Digite o novo numero da consulta: ");
+            scanf("%d", &(*c)[i].num_consulta);
+            getchar();
 
             printf("Digite o novo ID do Paciente: ");
             scanf("%d", &(*c)[i].id_paciente);
@@ -286,7 +326,8 @@ void alterarConsulta(consulta **c, int *num_consultas) //- - -- - -- -- - -- -- 
             scanf(" %[^\n]", (*c)[i].horario);
 
             printf("Digite a nova Duracao: ");
-            scanf("%d", &(*c)[i].duracao);
+            // scanf("%d", &(*c)[i].duracao);
+            scanf(" %[^\n]", (*c)[i].duracao);
             getchar();
 
             printf("Digite a nova Data: ");
@@ -344,7 +385,7 @@ void pesquisarConsulta(consulta **c, int *num_consultas) // - - - --- -- - -- --
             printf("ID do Paciente: %d\n", (*c)[i].id_paciente);
             printf("ID do Medico: %d\n", (*c)[i].id_medico);
             printf("Horario: %s\n", (*c)[i].horario);
-            printf("Duracao: %d\n", (*c)[i].duracao);
+            printf("Duracao: %s\n", (*c)[i].duracao);
             printf("Data: %s\n", (*c)[i].data);
             encontrado = 1;
             break;
@@ -373,7 +414,7 @@ void addMedico(medico **m, int *num_medicos) // - - - - - - - - - - - - - - - - 
         printf("\n --- Cadastro de Medicos ---\n");
 
         printf("Digite o CRM do medico: ");
-        scanf("%d", &(*m)[*num_medicos].crm);
+        scanf(" %d", &(*m)[*num_medicos].crm);
         getchar();
 
         printf("Digite o nome do medico: ");
@@ -397,6 +438,24 @@ void addMedico(medico **m, int *num_medicos) // - - - - - - - - - - - - - - - - 
     }
 }
 
+
+//Listar/Exibir médicos
+
+void listarMedicos(medico *m, int num_medicos) {
+    if (num_medicos == 0) {
+        printf("Nenhum medico cadastrado!\n");
+        return;
+    }
+
+    printf("------ Lista de Medicos ------\n");
+    for (int i = 0; i < num_medicos; i++) {
+        printf("CRM: %d\n", m[i].crm);
+        printf("Nome: %s\n", m[i].name);
+        printf("Especialidade: %s\n", m[i].especialidade);
+        printf("----------------------------\n");
+    }
+}
+
 void alterarMedico(medico **m, int *num_medicos) //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -ALTERAR MEDICO- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 {
     int crmPesquisar;
@@ -409,8 +468,14 @@ void alterarMedico(medico **m, int *num_medicos) //- - - - - - - - - - - - - - -
     {
         if ((*m)[i].crm == crmPesquisar)
         {
+            printf("CRM atual: %d\n", (*m)[i].crm);
             printf("Nome atual: %s\n", (*m)[i].name);
             printf("Especialidade atual: %s\n", (*m)[i].especialidade);
+            
+            
+            printf("Digite o novo CRM: ");
+            scanf("%d", &(*m)[*num_medicos].crm);
+            getchar();
 
             printf("Digite o novo nome: ");
             // fgets((*m)[i].name, 50, stdin);
@@ -480,7 +545,7 @@ void excluirMedico(medico **m, int *num_medicos, consulta **c, int *num_consulta
                 printf("Excluindo a consulta #%d do medico deletado...\n", (*c)[i].num_consulta);
                 printf("ID do Paciente: %d\n", (*c)[i].id_paciente);
                 printf("Horario: %s\n", (*c)[i].horario);
-                printf("Duracao: %d\n", (*c)[i].duracao);
+                printf("Duracao: %s\n", (*c)[i].duracao);
                 printf("Data: %s\n", (*c)[i].data);
                 printf("-----Consulta deleteda com sucesso!-----\n");
                 for (int j = i; j < *num_consultas - 1; j++)
@@ -528,16 +593,37 @@ void pesquisarMedico(medico **m, int *num_medicos) // - - - - - - - - - - - - - 
 
 //===============================================================================================================================================================================================================================
 
+void listarConsultas(consulta *c, int num_consultas) //Exibir todas as consultas
+{
+    if (num_consultas == 0)
+    {
+        printf("Nenhuma consulta cadastrada!\n");
+        return;
+    }
+
+    printf("------ Lista de Consultas ------\n");
+    for (int i = 0; i < num_consultas; i++)
+    {
+        printf("Consulta #%d\n", c[i].num_consulta);
+        printf("ID do Paciente: %d\n", c[i].id_paciente);
+        printf("ID do Medico: %d\n", c[i].id_medico);
+        printf("Horario: %s\n", c[i].horario);
+        printf("Duracao: %s\n", c[i].duracao);
+        printf("Data: %s\n", c[i].data);
+        printf("----------------------------\n");
+    }
+}
+
 void listarConsultasPorPaciente(consulta *consultas, int num_consultas, int idPaciente)
 {
     int encontrado = 0;
-    printf("\n=== Consultas do Paciente (ID %d) ===\n", idPaciente);
+    printf("\n=== Consultas do Paciente (CPF %d) ===\n", idPaciente);
 
     for (int i = 0; i < num_consultas; i++)
     {
         if (consultas[i].id_paciente == idPaciente)
         {
-            printf("Consulta #%d | Medico (CRM): %d | Data: %s | Horario: %s | Duração: %d min\n", consultas[i].num_consulta, consultas[i].id_medico, consultas[i].data, consultas[i].horario, consultas[i].duracao);
+            printf("Consulta #%d | Medico (CRM): %d | Data: %s | Horario: %s | Duração: %s min\n", consultas[i].num_consulta, consultas[i].id_medico, consultas[i].data, consultas[i].horario, consultas[i].duracao);
             encontrado = 1;
         }
     }
@@ -557,7 +643,7 @@ void listarConsultasPorMedico(consulta *consultas, int num_consultas, int crmMed
     {
         if (consultas[i].id_medico == crmMedico)
         {
-            printf("Consulta #%d | Paciente (ID): %d | Data: %s | Horario: %s | Duracao: %d min\n",
+            printf("Consulta #%d | Paciente (CPF): %d | Data: %s | Horario: %s | Duracao: %s min\n",
                    consultas[i].num_consulta, consultas[i].id_paciente, consultas[i].data, consultas[i].horario, consultas[i].duracao);
             encontrado = 1;
         }
@@ -586,9 +672,9 @@ void listarPacientesPorEspecialidade(consulta *consultas, int num_consultas, med
                 {
                     for (int k = 0; k < num_pacientes; k++)
                     {
-                        if (pacientes[k].id == consultas[j].id_paciente)
+                        if (pacientes[k].cpf == consultas[j].id_paciente)
                         {
-                            printf("Paciente: %s (ID %d)\n", pacientes[k].name, pacientes[k].id);
+                            printf("Paciente: %s (CPF %d)\n", pacientes[k].name, pacientes[k].cpf);
                             encontrado = 1;
                         }
                     }
@@ -622,7 +708,7 @@ void menuRelatorio(consulta *consultas, int num_consultas, medico *medicos, int 
         switch (opcao)
         {
         case 1:
-            printf("Digite o ID do paciente: ");
+            printf("Digite o CPF do paciente: ");
             scanf("%d", &id);
             listarConsultasPorPaciente(consultas, num_consultas, id);
             break;
@@ -664,13 +750,17 @@ int main(void) // MAIN====================MAIN====================MAIN==========
     int num_medicos = 0;
 
     int opMAIN, opMedico, opPaciente, opConsulta;
-    printf("Ola, seja bem vindo(a) ao sistema de gerenciamento de consultas medicas!\n");
-    printf("Developed by Gabriel Carvalho and  Victor Aires.\n");
+    printf("================================================================================================================================================================================================\n");
+    printf("================================================================================================================================================================================================\n");
+    printf("=======================================Ola, seja bem vindo(a) ao sistema de gerenciamento de consultas medicas!=================================================================================\n");
+    printf("====================================================Developed by Gabriel Carvalho and  Victor Aires.============================================================================================\n");
+    printf("================================================================================================================================================================================================\n");
+    printf("================================================================================================================================================================================================\n");
     printf("Por favor, escolha uma das opcoes abaixo: \n");
 
     do
     {
-        printf("\n-------Menu-------\n");
+        printf("\n=========Menu==========\n");
         printf("1 - Medicos\n");
         printf("2 - Pacientes\n");
         printf("3 - Consultas\n");
@@ -685,10 +775,11 @@ int main(void) // MAIN====================MAIN====================MAIN==========
             {
                 printf("\n-------Menu dos Medicos:-------\n");
                 printf("1 - Incluir Medico\n");
-                printf("2 - Pesquisar Medico \n");
-                printf("3 - Excluir Medico\n");
-                printf("4 - Alterar Medico\n");
-                printf("5 - Voltar para o menu anterior\n");
+                printf("2 - Listar Medicos\n");
+                printf("3 - Pesquisar Medico \n");
+                printf("4 - Excluir Medico\n");
+                printf("5 - Alterar Medico\n");
+                printf("6 - Voltar para o menu anterior\n");
                 printf("O que voce quer pra hoje? Minha querida professora Cascine: \n");
                 scanf("%d", &opMedico);
                 getchar();
@@ -699,25 +790,29 @@ int main(void) // MAIN====================MAIN====================MAIN==========
                     break;
 
                 case 2:
-                    pesquisarMedico(&medicos, &num_medicos);
+                    listarMedicos(medicos, num_medicos);
                     break;
 
                 case 3:
-                    excluirMedico(&medicos, &num_medicos, &consultas, &num_consultas);
+                    pesquisarMedico(&medicos, &num_medicos);
                     break;
 
                 case 4:
-                    alterarMedico(&medicos, &num_medicos);
+                    excluirMedico(&medicos, &num_medicos, &consultas, &num_consultas);
                     break;
 
                 case 5:
+                    alterarMedico(&medicos, &num_medicos);
+                    break;
+
+                case 6:
                     printf("Voltando...\n");
                     break;
 
                 default:
                     printf("Desculpe, voce poderia escolher outra opcao?\n");
                 }
-            } while (opMedico != 5);
+            } while (opMedico != 6);
             break;
 
         case 2:
@@ -726,10 +821,11 @@ int main(void) // MAIN====================MAIN====================MAIN==========
             {
                 printf("\n------- Menu dos Pacientes -------\n");
                 printf("1 - Incluir Paciente\n");
-                printf("2 - Pesquisar Paciente\n");
-                printf("3 - Excluir Paciente\n");
-                printf("4 - Alterar Paciente\n");
-                printf("5 - Voltar para o menu principal\n");
+                printf("2 - Exibir Pacientes\n");
+                printf("3 - Pesquisar Paciente\n");
+                printf("4 - Excluir Paciente\n");
+                printf("5 - Alterar Paciente\n");
+                printf("6 - Voltar para o menu principal\n");
                 printf("O que voce quer pra hoje? Minha querida professora Cascine: \n");
                 scanf("%d", &opPaciente);
                 getchar();
@@ -741,25 +837,28 @@ int main(void) // MAIN====================MAIN====================MAIN==========
                     break;
 
                 case 2:
+                    listarPacientes(pacientes, num_pacientes);
+
+                case 3:
                     pesquisarPaciente(&pacientes, &num_pacientes);
                     break;
 
-                case 3:
+                case 4:
                     excluirPaciente(&pacientes, &num_pacientes, &consultas, &num_consultas);
                     break;
 
-                case 4:
+                case 5:
                     alterarPaciente(&pacientes, &num_pacientes);
                     break;
 
-                case 5:
+                case 6:
                     printf("Voltando...\n");
                     break;
 
                 default:
                     printf("Desculpe, voce poderia escolher outra opcao?\n");
                 }
-            } while (opPaciente != 5);
+            } while (opPaciente != 6);
             break;
 
         case 3:
@@ -768,10 +867,11 @@ int main(void) // MAIN====================MAIN====================MAIN==========
             {
                 printf("\n------- Menu de Consultas -------\n");
                 printf("1 - Incluir Consulta\n");
-                printf("2 - Alterar Consulta\n");
-                printf("3 - Excluir Consulta\n");
-                printf("4 - Pesquisar Consulta\n");
-                printf("5 - Voltar\n");
+                printf("2 - Exibir Consultas\n");
+                printf("3 - Alterar Consulta\n");
+                printf("4 - Excluir Consulta\n");
+                printf("5 - Pesquisar Consulta\n");
+                printf("6 - Voltar\n");
                 printf("O que voce quer pra hoje? Minha querida professora Cascine: \n");
                 scanf("%d", &opConsulta);
                 getchar();
@@ -783,25 +883,28 @@ int main(void) // MAIN====================MAIN====================MAIN==========
                     break;
 
                 case 2:
+                    listarConsultas(consultas, num_consultas);
+
+                case 3:
                     alterarConsulta(&consultas, &num_consultas);
                     break;
 
-                case 3:
+                case 4:
                     excluirConsulta(&consultas, &num_consultas);
                     break;
 
-                case 4:
+                case 5:
                     pesquisarConsulta(&consultas, &num_consultas);
                     break;
 
-                case 5:
+                case 6:
                     printf("Voltando...\n");
                     break;
 
                 default:
                     printf("Desculpe, voce poderia escolher outra opcao?\n");
                 }
-            } while (opConsulta != 5);
+            } while (opConsulta != 6);
             break;
 
         case 4:
