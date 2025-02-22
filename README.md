@@ -1,55 +1,135 @@
-# Hospital Carvalho Aires
+# Sistema de Gerenciamento de Consultas Médicas
 
-This repository contains the source code for the Hospital Carvalho Aires management system. The main functionality is implemented in the `main.c` file.
+## Desenvolvido por: Gabriel Carvalho e Victor Aires
 
-## Features
+### 📌 Descrição
+Este projeto implementa um sistema de gerenciamento de consultas médicas, permitindo o cadastro, alteração, exclusão e consulta de médicos, pacientes e consultas. Além disso, o sistema garante a integridade dos dados ao excluir automaticamente as consultas vinculadas a médicos e pacientes removidos.
 
-- Patient registration
-- Appointment scheduling
-- Medical records management
-- Billing and invoicing
+---
 
-## Getting Started
+## 🛠 Funcionalidades
 
-### Prerequisites
+✔ **Cadastro de médicos, pacientes e consultas**
+✔ **Alteração de dados** (nome, especialidade, horários, etc.)
+✔ **Exclusão de registros**, removendo automaticamente as consultas associadas
+✔ **Busca de médicos, pacientes e consultas**
+✔ **Listagem geral e filtrada**
+✔ **Alocação dinâmica** para manipulação eficiente dos dados
 
-- C compiler (e.g., GCC)
-- Make (optional, for build automation)
+---
 
-### Building the Project
+## 🏗 Estrutura do Código
+O código é baseado nas seguintes **structs**:
 
-To compile the project, navigate to the directory containing `main.c` and run:
+```c
+typedef struct {
+    int cpf;
+    char name[50];
+    char rg[25];
+    char endereco[100];
+    char telefone[20];
+    char sexo[20];
+} paciente;
 
-```sh
-gcc -o hospital main.c
+typedef struct {
+    int num_consulta;
+    int id_paciente;
+    int id_medico;
+    char horario[6];
+    char duracao[20];
+    char data[10];
+} consulta;
+
+typedef struct {
+    int crm;
+    char name[50];
+    char especialidade[50];
+} medico;
 ```
 
-Alternatively, if a `Makefile` is provided, you can use:
+### 📌 Principais Funções Implementadas
 
-```sh
-make
+#### ➤ Cadastro de Médicos
+```c
+void addMedico(medico **m, int *num_medicos);
+```
+Permite inserir um novo médico no sistema.
+
+#### ➤ Exclusão de Médicos (Remove Consultas Vinculadas)
+```c
+void excluirMedico(medico **m, int *num_medicos, consulta **c, int *num_consultas);
+```
+Se um médico for excluído, todas as suas consultas também são removidas.
+
+#### ➤ Cadastro de Pacientes
+```c
+void addPaciente(paciente **p, int *num_pacientes);
+```
+Adiciona um novo paciente à base de dados.
+
+#### ➤ Gerenciamento de Consultas
+```c
+void addConsulta(consulta **c, int *num_consultas);
+```
+Permite agendar consultas e vincular pacientes a médicos.
+
+#### ➤ Relatórios
+```c
+void gerarRelatorios();
+```
+Gera um relatório com todas as informações cadastradas.
+
+---
+
+## 🚀 Como Executar
+
+### 1️⃣ Compilar o código
+```bash
+gcc main.c -o hospital_system
 ```
 
-### Running the Program
-
-After compiling, you can run the executable:
-
-```sh
-./hospital
+### 2️⃣ Executar o programa
+```bash
+./hospital_system
 ```
 
-## Usage
+---
 
-Upon running the program, you will be presented with a menu to navigate through the various features of the hospital management system. Follow the on-screen instructions to perform different operations such as registering patients, scheduling appointments, and managing medical records.
+## 📋 Exemplo de Uso
 
-## Contributing
+📌 **Fluxo básico do sistema**
+```bash
+Bem-vindo ao sistema de gerenciamento de consultas médicas!
+1 - Médicos
+2 - Pacientes
+3 - Consultas
+4 - Relatório
+5 - Sair
+Escolha uma opção: 1
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+--- Menu de Médicos ---
+1 - Incluir Médico
+2 - Pesquisar Médico
+3 - Excluir Médico
+4 - Voltar
+Escolha uma opção: 1
+Digite o CRM do médico: 1234
+Digite o nome do médico: Dr. Pedro
+Digite a especialidade do médico: Cardiologista
+Médico cadastrado com sucesso!
+```
 
-## License
+---
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+## ⚠ Possíveis Melhorias Futuras
+✅ **Persistência dos dados com arquivos binários**
+✅ **Interface gráfica para melhor usabilidade**
+✅ **Integração com banco de dados para escalabilidade**
 
-## Contact
+---
 
-For any inquiries or support, please contact [your-email@example.com].
+## 📌 Conclusão
+Este sistema permite um gerenciamento eficiente de médicos, pacientes e consultas, garantindo integridade ao excluir automaticamente consultas vinculadas. Ele utiliza **alocação dinâmica**, evitando desperdício de memória. É um projeto modular e extensível para futuras melhorias.
+
+📌 **Desenvolvido com dedicação por Gabriel Carvalho e Victor Aires!** 🚀
+
